@@ -1,6 +1,7 @@
 ﻿namespace EightyDecibel.AsyncNats
 {
     using System;
+    using System.Buffers;
     using System.Runtime.CompilerServices;
     using System.Text;
 
@@ -13,7 +14,7 @@
         private readonly string _string;
 
         public NatsPayload(ReadOnlyMemory<byte> value)
-        {
+        {            
             Memory = value;
             _string = string.Empty;
         }

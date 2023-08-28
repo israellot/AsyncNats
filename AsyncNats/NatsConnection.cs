@@ -593,17 +593,17 @@
         }
 
         public async IAsyncEnumerable<NatsMsg> Subscribe(NatsKey subject, NatsKey? queueGroup = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
+        {            
             static NatsMsg Deserialize(NatsMsg msg)
             {
-                // NOTE: The subject/reply-to has to be copied using 'AsString' because otherwise it would be using rented memory and could be freed before used
-                return new NatsMsg(msg.Subject.AsString(), msg.SubscriptionId, msg.ReplyTo.AsString(), msg.Payload.ToArray());
+                return msg.Copy();
             }
 
             await foreach (var msg in InternalSubscribe(subject, queueGroup, cancellationToken))
             {
                 yield return DeserializeWrapper(Deserialize, msg);
             }
+            
         }
 
         /// <summary>

@@ -80,6 +80,11 @@
 
         }
 
+        internal NatsMsg Copy()
+        {
+            return new NatsMsg(Subject.Copy(), SubscriptionId, ReplyTo.Copy(), Payload.ToArray());
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rent()
         {

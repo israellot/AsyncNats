@@ -54,6 +54,16 @@
             return this.AsString() == other;
         }
 
+        internal NatsKey Copy()
+        {
+            if (IsEmpty) return Empty;
+            
+            var buffer = new byte[Memory.Length];            
+            Memory.Span.CopyTo(buffer);
+            
+            return new NatsKey(buffer);
+        }
+
         public override int GetHashCode()
         {
             //TODO Should cache?
